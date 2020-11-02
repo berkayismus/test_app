@@ -2,22 +2,24 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:test_app/screens/main_screen.dart';
+import 'package:test_app/screens/product_screen.dart';
 import 'package:test_app/services/login_api.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MainScreen());
 
-class MyApp extends StatelessWidget {
+class MainScreen extends StatelessWidget {
+  static const String id = '/';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Test Coflow App',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/main_screen',
+      initialRoute: MainScreen.id,
       routes: {
-        '/': (context) => MyAppScaffold(),
-        '/main_screen': (context) => MainScreen()
+        MainScreen.id: (context) => MyAppScaffold(),
+        ProductScreen.id: (context) => ProductScreen()
       },
     );
   }
@@ -95,8 +97,9 @@ class _MyAppScaffoldState extends State<MyAppScaffold> {
                     color: Colors.pink,
                     textColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.red)),
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.red),
+                    ),
                   ),
                 ],
               ),
@@ -121,7 +124,7 @@ class _MyAppScaffoldState extends State<MyAppScaffold> {
     if (returnMessage['result'] == 1) {
       // TODO: if login ok, navigate to main page
       Navigator.pop(context);
-      Navigator.pushNamed(context, '/main_screen');
+      Navigator.pushNamed(context, ProductScreen.id);
     } else {
       // TODO: if login not ok, show a message
       _showAlertMessage();
