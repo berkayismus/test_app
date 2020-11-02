@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:test_app/screens/main_screen.dart';
 import 'package:test_app/services/login_api.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
@@ -12,7 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Test Coflow App',
       debugShowCheckedModeBanner: false,
-      home: MyAppScaffold(),
+      initialRoute: '/main_screen',
+      routes: {
+        '/': (context) => MyAppScaffold(),
+        '/main_screen': (context) => MainScreen()
+      },
     );
   }
 }
@@ -26,6 +32,9 @@ class _MyAppScaffoldState extends State<MyAppScaffold> {
   // controllers for text
   TextEditingController _userNameTextController;
   TextEditingController _userPasswordTextController;
+
+  // user login api
+  Map _returnMessage;
 
   @override
   void initState() {
@@ -99,20 +108,42 @@ class _MyAppScaffoldState extends State<MyAppScaffold> {
   }
 
   void _onLoginPressed() {
-    // TODO: if login button clicked operations
     String userName = _userNameTextController.text;
     String userPassword = _userPasswordTextController.text;
     LoginApi.userLogin(userName, userPassword).then((response) {
       Map returnMessage = jsonDecode(response.body);
+      this._returnMessage = returnMessage;
       _userLoginControl(returnMessage);
     });
   }
 
   void _userLoginControl(Map returnMessage) {
     if (returnMessage['result'] == 1) {
-      print('Login OK');
+      // TODO: if login ok, navigate to main page
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/main_screen');
     } else {
-      print('Login not OK');
+      // TODO: if login not ok, show a message
+      _showAlertMessage();
     }
+  }
+
+  void _showAlertMessage() {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "LOGIN",
+      desc: _returnMessage['message'],
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
   }
 }
