@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:test_app/models/WareHouse.dart';
 import 'package:test_app/services/warehouse_api.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
@@ -17,6 +18,9 @@ class _WareHouseDetailScreenState extends State<WareHouseDetailScreen> {
   // controllers
   TextEditingController _wareHouseNameController;
   TextEditingController _wareHouseStatusController;
+
+  // lists
+  List<WareHouse> _warehouseList = [];
 
   @override
   void initState() {
@@ -79,6 +83,18 @@ class _WareHouseDetailScreenState extends State<WareHouseDetailScreen> {
     WareHouseApi.getWareHouseDetails(wareHouseId).then((response) {
       List<dynamic> wareHouseDetailList = jsonDecode(response.body);
       //print(wareHouseDetailList.toString());
+      this._warehouseList = wareHouseDetailList
+          .map((warehouse) => WareHouse.toJSON(warehouse))
+          .toList();
+      //print(_warehouseList[0].warehouse_name);
+      _fillInputFields(_warehouseList[0]);
     });
+  }
+
+  void _fillInputFields(WareHouse wareHouse) {
+    String wareHouseName = wareHouse.warehouse_name;
+    String wareHouseStatus = wareHouse.status;
+    _wareHouseNameController.text = wareHouseName;
+    _wareHouseStatusController.text = wareHouseStatus;
   }
 }
