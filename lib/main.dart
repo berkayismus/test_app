@@ -21,8 +21,8 @@ class MainScreen extends StatelessWidget {
       initialRoute: BottomNavScreen.id,
       routes: {
         MainScreen.id: (context) => MainScreenBody(),
+        BottomNavScreen.id: (context) => BottomNavScreen(),
         ProductScreen.id: (context) => ProductScreen(),
-        BottomNavScreen.id: (context) => BottomNavScreen()
         //'/warehouse_detail/1': (context) => WareHouseDetailScreen()
       },
       onGenerateRoute: (RouteSettings settings) {
@@ -135,7 +135,7 @@ class _MainScreenBodyState extends State<MainScreenBody> {
     if (returnMessage['result'] == 1) {
       // TODO: if login ok, navigate to main page
       Navigator.pop(context);
-      Navigator.pushNamed(context, ProductScreen.id);
+      Navigator.pushNamed(context, BottomNavScreen.id);
     } else {
       // TODO: if login not ok, show a message
       _showAlertMessage();

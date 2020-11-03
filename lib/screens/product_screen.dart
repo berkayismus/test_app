@@ -40,7 +40,7 @@ class _ProductScreenState extends State<ProductScreen> {
       });
       // print('Ürün listesi ' + products.toString());
       // print('Ürün listesi ' + _productList[0].productName);
-      print('Ürün sayısı ' + _productList.length.toString());
+      // print('Ürün sayısı ' + _productList.length.toString());
     });
   }
 }

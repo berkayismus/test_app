@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:test_app/screens/product_screen.dart';
 import 'package:test_app/screens/warehouse_screen.dart';
 
+import 'company_screen.dart';
+
 class BottomNavScreen extends StatefulWidget {
   BottomNavScreen({Key key}) : super(key: key);
 
@@ -19,10 +21,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   List<Widget> _widgetOptions = <Widget>[
     ProductScreen(),
     WareHouseScreen(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    CompanyScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -51,8 +50,8 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             label: 'WareHouses',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'About',
+            icon: Icon(Icons.corporate_fare),
+            label: 'Company',
           ),
         ],
         currentIndex: _selectedIndex,
