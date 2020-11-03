@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:test_app/models/WareHouse.dart';
 import 'package:test_app/services/warehouse_api.dart';
+import 'package:test_app/widgets/cus_raised_button.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
 class WareHouseDetailScreen extends StatefulWidget {
@@ -74,6 +76,17 @@ class _WareHouseDetailScreenState extends State<WareHouseDetailScreen> {
             ),
           ],
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: CusRaisedButton(
+                buttonText: 'UPDATE',
+                onPressed: _updateWareHouse,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -96,5 +109,38 @@ class _WareHouseDetailScreenState extends State<WareHouseDetailScreen> {
     String wareHouseStatus = wareHouse.status;
     _wareHouseNameController.text = wareHouseName;
     _wareHouseStatusController.text = wareHouseStatus;
+  }
+
+  void _updateWareHouse() {
+    String wareHouseName = _wareHouseNameController.text;
+    String wareHouseStatus = _wareHouseStatusController.text;
+    WareHouseApi.updateWareHouse(
+            widget.wareHouseId, wareHouseName, wareHouseStatus)
+        .then((response) {
+      Map responseBody = jsonDecode(response.body);
+      //print('Response gövdesi ' + responseBody.toString());
+      int result = responseBody['result'];
+      String resultMessage = responseBody['message'];
+      _showAlertMessage(result, resultMessage);
+    });
+  }
+
+  void _showAlertMessage(int result, String resultMessage) {
+    Alert(
+      context: context,
+      type: result == 1 ? AlertType.success : AlertType.error,
+      title: "UPDATE",
+      desc: resultMessage,
+      buttons: [
+        DialogButton(
+          child: Text(
+            "OK",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          width: 120,
+        )
+      ],
+    ).show();
   }
 }

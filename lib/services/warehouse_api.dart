@@ -19,4 +19,20 @@ class WareHouseApi {
       throw ('get warehouse details api error');
     }
   }
+
+  static Future updateWareHouse(
+      String wareHouseId, String wareHouseName, String wareHouseStatus) async {
+    Map postBody = {
+      'id': wareHouseId,
+      'warehouse_name': wareHouseName,
+      'status': wareHouseStatus
+    };
+    var response =
+        await http.post('$kBaseUrl/WarehouseList/$wareHouseId', body: postBody);
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw ('update warehouse api error');
+    }
+  }
 }
