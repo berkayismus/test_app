@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:test_app/models/WareHouse.dart';
+
+import 'constants.dart';
 
 class CusListViewWareHouse extends StatelessWidget {
   final List<WareHouse> wareHouseList;
@@ -17,13 +20,15 @@ class CusListViewWareHouse extends StatelessWidget {
               child: ListTile(
                 onTap: () => Navigator.pushNamed(
                     context, '/warehouse_detail/${wareHouseList[index].id}'),
-                leading: Icon(Icons.storage),
+                leading: Icon(FontAwesomeIcons.warehouse),
                 trailing: Text(
                   'ID ${wareHouseList[index].id}',
                   style: TextStyle(color: Colors.green, fontSize: 15),
                 ),
                 title: Text(
-                    'Warehouse Name ${wareHouseList[index].warehouse_name}'),
+                  'Warehouse Name ${wareHouseList[index].warehouse_name}',
+                  style: kListTitleTextStyle,
+                ),
                 subtitle: Text('Language \n${wareHouseList[index].language}'),
               ),
             ),

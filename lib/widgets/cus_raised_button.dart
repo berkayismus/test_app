@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 class CusRaisedButton extends StatelessWidget {
   final String buttonText;
   final Function onPressed;
@@ -8,14 +10,16 @@ class CusRaisedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: onPressed,
-      child: Text(buttonText),
-      color: Colors.pink,
-      textColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18.0),
-        side: BorderSide(color: Colors.red),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: RaisedButton(
+        onPressed: onPressed,
+        child: Text(buttonText),
+        color: kButtonBackColor,
+        textColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
       ),
     );
   }

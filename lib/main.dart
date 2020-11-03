@@ -5,20 +5,28 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:test_app/screens/bottom_nav_screen.dart';
 import 'package:test_app/screens/product_screen.dart';
 import 'package:test_app/screens/warehouse_detail_screen.dart';
+import 'package:test_app/services/company_api.dart';
 import 'package:test_app/services/login_api.dart';
+import 'package:test_app/widgets/constants.dart';
+import 'package:test_app/widgets/cus_raised_button.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
-void main() => runApp(MainScreen());
+import 'models/Company.dart';
+
+void main() {
+  runApp(MainScreen());
+}
 
 class MainScreen extends StatelessWidget {
   static const String id = '/';
+  Company _company;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Test Coflow App',
       debugShowCheckedModeBanner: false,
-      initialRoute: BottomNavScreen.id,
+      initialRoute: MainScreen.id,
       routes: {
         MainScreen.id: (context) => MainScreenBody(),
         BottomNavScreen.id: (context) => BottomNavScreen(),
@@ -32,6 +40,22 @@ class MainScreen extends StatelessWidget {
               builder: (context) => WareHouseDetailScreen(pathElements[2]));
         }
       },
+      theme: ThemeData(
+        // TODO: API'dan gelecek, primary_color
+        //primaryColor: _getPrimaryColor(),
+        primaryColor: Color(0xFFEF8052),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Color(0xFF000000),
+          ),
+          bodyText2: TextStyle(
+            color: Colors.blue,
+          ),
+        ).apply(
+          bodyColor: Colors.orange,
+          displayColor: Colors.blue,
+        ),
+      ),
     );
   }
 }
@@ -102,14 +126,10 @@ class _MainScreenBodyState extends State<MainScreenBody> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RaisedButton(
-                    onPressed: _onLoginPressed,
-                    child: Text('LOGIN'),
-                    color: Colors.pink,
-                    textColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.red),
+                  Expanded(
+                    child: CusRaisedButton(
+                      buttonText: 'LOGIN',
+                      onPressed: _onLoginPressed,
                     ),
                   ),
                 ],
@@ -133,11 +153,9 @@ class _MainScreenBodyState extends State<MainScreenBody> {
 
   void _userLoginControl(Map returnMessage) {
     if (returnMessage['result'] == 1) {
-      // TODO: if login ok, navigate to main page
       Navigator.pop(context);
       Navigator.pushNamed(context, BottomNavScreen.id);
     } else {
-      // TODO: if login not ok, show a message
       _showAlertMessage();
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/models/Company.dart';
 import 'package:test_app/services/company_api.dart';
+import 'package:test_app/widgets/constants.dart';
 
 class CompanyScreen extends StatefulWidget {
   @override
@@ -74,7 +75,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
           child: ListTile(
             leading: Icon(
               Icons.add_location,
-              color: Colors.teal,
+              color: kCompanyIconColor,
             ),
             title: Text(
               '${_company.address}',
@@ -86,7 +87,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
           child: ListTile(
             leading: Icon(
               Icons.phone,
-              color: Colors.teal,
+              color: kCompanyIconColor,
             ),
             title: Text(
               '${_company.phone_number}',
@@ -98,7 +99,7 @@ class _CompanyScreenState extends State<CompanyScreen> {
           child: ListTile(
             leading: Icon(
               Icons.email,
-              color: Colors.teal,
+              color: kCompanyIconColor,
             ),
             title: Text(
               '${_company.mail}',
