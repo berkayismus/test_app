@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:test_app/screens/bottom_nav_screen.dart';
 import 'package:test_app/screens/product_screen.dart';
+import 'package:test_app/screens/warehouse_detail_screen.dart';
 import 'package:test_app/services/login_api.dart';
 import 'package:test_app/widgets/cus_text_field.dart';
 
@@ -16,21 +18,30 @@ class MainScreen extends StatelessWidget {
     return MaterialApp(
       title: 'Test Coflow App',
       debugShowCheckedModeBanner: false,
-      initialRoute: MainScreen.id,
+      initialRoute: BottomNavScreen.id,
       routes: {
-        MainScreen.id: (context) => MyAppScaffold(),
-        ProductScreen.id: (context) => ProductScreen()
+        MainScreen.id: (context) => MainScreenBody(),
+        ProductScreen.id: (context) => ProductScreen(),
+        BottomNavScreen.id: (context) => BottomNavScreen()
+        //'/warehouse_detail/1': (context) => WareHouseDetailScreen()
+      },
+      onGenerateRoute: (RouteSettings settings) {
+        List<String> pathElements = settings.name.split('/');
+        if (pathElements[1] == 'warehouse_detail') {
+          return MaterialPageRoute(
+              builder: (context) => WareHouseDetailScreen(pathElements[2]));
+        }
       },
     );
   }
 }
 
-class MyAppScaffold extends StatefulWidget {
+class MainScreenBody extends StatefulWidget {
   @override
-  _MyAppScaffoldState createState() => _MyAppScaffoldState();
+  _MainScreenBodyState createState() => _MainScreenBodyState();
 }
 
-class _MyAppScaffoldState extends State<MyAppScaffold> {
+class _MainScreenBodyState extends State<MainScreenBody> {
   // controllers for text
   TextEditingController _userNameTextController;
   TextEditingController _userPasswordTextController;

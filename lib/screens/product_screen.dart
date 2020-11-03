@@ -26,12 +26,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Screen'),
-      ),
-      body: CusListViewProduct(productList: _productList),
-    );
+    return CusListViewProduct(productList: _productList);
   }
 
   void _getProductList() {
